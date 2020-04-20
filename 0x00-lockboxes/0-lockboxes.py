@@ -18,5 +18,3 @@ def canUnlockAll(boxes):
         if keys_needed not in keys:
             return False
     return True
-
-
