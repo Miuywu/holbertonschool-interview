@@ -4,9 +4,7 @@
 def canUnlockAll(boxes):
     i = 0
     keys = [0]
-    for box in boxes:
-        if i == len(boxes) - 1:
-            break
+    while i < len(boxes) - 1:
         for key in keys:
             tmp = []
             if key < len(boxes):
