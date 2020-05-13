@@ -12,9 +12,6 @@ def minOperations(n):
         if star * 2 < n:
             clip = star
             ops += 1
-            print("copy all")
         star += clip
         ops += 1
-        print("paste")
-        print("{}".format(star))
     return ops - 1
