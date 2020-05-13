@@ -3,15 +3,13 @@
 
 
 def minOperations(n):
-    star = 1
-    clip = 1
     ops = 0
-    if n == 0:
+    if n == 0 or n == 1:
         return 0
-    while star <= n:
-        if star * 2 < n:
-            clip = star
-            ops += 1
-        star += clip
-        ops += 1
-    return ops - 1
+    while n > 1:
+        for p_factor in range(2, n + 1):
+            if n % p_factor == 0:
+                ops += p_factor
+                n //= p_factor
+                break
+    return ops
