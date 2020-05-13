@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+""" Finds min number of operations needed """
+
+
 def minOperations(n):
     starting = 1
     clipboard = starting
