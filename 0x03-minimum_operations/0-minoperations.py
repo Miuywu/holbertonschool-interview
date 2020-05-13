@@ -3,19 +3,18 @@
 
 
 def minOperations(n):
-    starting = 1
-    clipboard = -1
-    operations = 0
+    star = 1
+    clip = 1
+    ops = 0
     if n == 0:
         return 0
-    while starting != n:
-        """ COPY ALL"""
-        if starting * 2 < n:
-            clipboard = starting
-            starting = starting + clipboard
-            operations = operations + 2
-        """ PASTE """
-        if clipboard != -1:
-            starting = starting + clipboard
-            operations = operations + 1
-    return operations
+    while star <= n:
+        if star * 2 < n:
+            clip = star
+            ops += 1
+            print("copy all")
+        star += clip
+        ops += 1
+        print("paste")
+        print("{}".format(star))
+    return ops - 1
