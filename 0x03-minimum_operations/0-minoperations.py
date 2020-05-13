@@ -12,7 +12,8 @@ def minOperations(n):
         """ COPY ALL"""
         if starting * 2 < n:
             clipboard = starting
-            operations = operations + 1
+            starting = starting + clipboard
+            operations = operations + 2
         """ PASTE """
         if clipboard != -1:
             starting = starting + clipboard
