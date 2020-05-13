@@ -6,6 +6,8 @@ def minOperations(n):
     starting = 1
     clipboard = starting
     operations = 0
+    if n == 0:
+        return 0
     while starting != n:
         """ COPY ALL"""
         if starting * 2 < n:
