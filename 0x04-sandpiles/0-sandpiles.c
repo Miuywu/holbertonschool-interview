@@ -27,15 +27,22 @@ void print_pile(int pile[3][3])
  */
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
-	int a, b, unstable = -1, grid3[3][3];
+	int a, b, unstable = 0, grid3[3][3];
 
 	for (a = 0; a < 3; a++)
 		for (b = 0; b < 3; b++)
 			grid1[a][b] += grid2[a][b];
-	while (unstable != 0)
+	for (a = 0; a < 3; a++)
+		for (b = 0; b < 3; b++)
+			if (grid1[a][b] > 3)
+			{
+				unstable++;
+			}
+	if (unstable)
+		printf("=\n");
+	unstable = 1;
+	while (unstable > 0)
 	{
-		if (unstable == -1)
-			printf("=\n");
 		unstable = 0;
 		for (a = 0; a < 3; a++)
 			for (b = 0; b < 3; b++)
@@ -46,6 +53,7 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 				}
 		if (unstable)
 		{
+			printf("%i\n", unstable);
 			print_pile(grid1);
 			if (unstable > 1)
 				printf("=\n");
