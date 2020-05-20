@@ -53,7 +53,6 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 				}
 		if (unstable)
 		{
-			printf("%i\n", unstable);
 			print_pile(grid1);
 			if (unstable > 1)
 				printf("=\n");
