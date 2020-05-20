@@ -1,6 +1,25 @@
 #include <stdio.h>
 #include "sandpiles.h"
 /**
+ * print_pile - prints sandpile
+ * @pile: sandpile
+ * Return: void
+ */
+void print_pile(int pile[3][3])
+{
+	int a, b;
+
+	for (a = 0; a < 3; a++)
+		for (b = 0; b < 3; b++)
+		{
+			printf("%i", pile[a][b]);
+			if (b == 2)
+				printf("\n");
+			else
+				printf(" ");
+		}
+}
+/**
  * sandpiles_sum - adds sandpiles then shows progression toward stable sandpile
  * @grid1: first sandpile
  * @grid2: second sandpile
@@ -8,13 +27,15 @@
  */
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
-	int a, b, unstable = 1, grid3[3][3];
+	int a, b, unstable = -1, grid3[3][3];
 
 	for (a = 0; a < 3; a++)
 		for (b = 0; b < 3; b++)
 			grid1[a][b] += grid2[a][b];
-	while (unstable > 0)
+	while (unstable != 0)
 	{
+		if (unstable == -1)
+			printf("=\n");
 		unstable = 0;
 		for (a = 0; a < 3; a++)
 			for (b = 0; b < 3; b++)
@@ -25,15 +46,9 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 				}
 		if (unstable)
 		{
-			for (a = 0; a < 3; a++)
-				for (b = 0; b < 3; b++)
-				{
-					printf("%i", grid1[a][b]);
-					if (b == 2)
-						printf("\n");
-					else
-						printf(" ");
-				}
+			print_pile(grid1);
+			if (unstable > 1)
+				printf("=\n");
 			for (a = 0; a < 3; a++)
 				for (b = 0; b < 3; b++)
 				{
@@ -56,12 +71,5 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 		}
 		else
 			return;
-		unstable = 0;
-                for (a = 0; a < 3; a++)
-                        for (b = 0; b < 3; b++)
-                                if (grid1[a][b] > 3)
-                                        unstable++;
-                if (unstable)
-			printf("=\n");
 	}
 }
