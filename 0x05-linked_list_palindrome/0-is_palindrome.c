@@ -10,14 +10,14 @@ int is_palindrome(listint_t **head)
 {
 	listint_t *r;
 	int list_len, a, b, stop;
-	int arr[2000];
+	int *arr;
 
 	if (*head)
 	{
 		for (r = *head, list_len = 0; r; r = r->next)
 			list_len++;
 
-		/*arr = malloc(sizeof(int) * list_len);*/
+		arr = malloc(sizeof(int) * list_len);
 
 		for (a = 0, r = *head; a < list_len; a++, r = r->next)
 			arr[a] = r->n;
