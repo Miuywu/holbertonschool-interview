@@ -1,27 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "lists.h"
 /**
- * is_palindrome - checks if a linked list is a palindrome
- * @head: linked list
- * Return: 0 is the list is not a palindrome, else 1
+ * is_palindrome - checks if listint_t is a palindrome
+ * @head: start of list
+ * Return: 0 if not palindrome, 1 if is palindrome
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *cpy, *cpy2;
-	int a, l = 0, m, arr[8024];
-	
-	if (!head|| !*head)
-		return (1);
-	for(a = 0, cpy = *head; cpy; cpy = cpy->next, a++)
+	listint_t *r;
+	int list_len, a, b, stop;
+	int *arr;
+
+	if (*head)
 	{
-		l++;
-		arr[a] = cpy->n;
+		for (r = *head, list_len = 0; r; r = r->next)
+			list_len++;
+
+		arr = malloc(sizeof(int) * list_len);
+
+		for (a = 0, r = *head; a < list_len; a++, r = r->next)
+			arr[a] = r->n;
+
+		stop = list_len / 2;
+		for (a = 0, b = list_len - 1; a < stop; a++, b--)
+			if (arr[a] != arr[b])
+			{
+				free(arr);
+				return (0);
+			}
+		free(arr);
 	}
-	if (l % 2)
-		m = l / 2 + 1;
-	else
-		m = l / 2;
-	for (a = 0; a <= m; a++, l--)
-		if (arr[a] != arr[l])
-			return (0);
 	return (1);
 }
