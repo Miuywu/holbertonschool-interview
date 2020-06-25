@@ -5,20 +5,20 @@
 def validUTF8(data):
     """Checks UTF-8 format"""
     bit = 0
-
-    for number in data:
+    for byte in data:
         if bit:
-            bit -= 1
-            if (((n & 0xff) >> 6) != 2):
+            if byte >> 6 != 0b10:
                 return False
-        elif (n & 0xF0) == 0xF0:
-            bit = 3
-        elif (n & 0xE0) == 0xE0:
-            bit = 2
-        elif (n & 0xC0) == 0xC0:
-            bit = 1
-        elif not (n & 0x80):
-            bit = 0
+            bit -= 1
         else:
-            return False
-    return not bit
+            if byte >> 7 == 0:
+                continue
+            elif byte >> 3 == 0b11110:
+                bit = 3
+            elif byte >> 4 == 0b1110:
+                bit = 2
+            elif byte >> 5 == 0b110:
+                bit = 1
+            else:
+                return False
+    return bit == 0
