@@ -21,5 +21,4 @@ def validUTF8(data):
             bit = 0
         else:
             return False
-    return bit == 0
-    
+    return not bit
