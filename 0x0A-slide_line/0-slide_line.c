@@ -8,14 +8,14 @@
  */
 int slide_line(int *line, size_t size, int direction)
 {
-	int s = (int)size, d = 1, a, b, c, z = 0, y = 0, w = 1;
+	int s = (int)size, d = 1, a, b, c, z = 0, y = s - 1, w = 1;
 
 	if (!line || (direction != SLIDE_LEFT && direction != SLIDE_RIGHT))
 		return (0);
 	if (direction == SLIDE_RIGHT)
 	{	d = -1;
 		z = s;
-		y = s - 1;
+		y = 0;
 		w = -1;
 	}
 	for (a = z; a != y; a += d)
