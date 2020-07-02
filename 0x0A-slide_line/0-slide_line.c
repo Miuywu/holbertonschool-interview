@@ -9,13 +9,16 @@
 int slide_line(int *line, size_t size, int direction)
 {
 	int s = (int)size;
-	int d = 1, a, b, c;
+	int d = 1, a, b, c, z = 0;
 
-	if (direction != SLIDE_LEFT && direction != SLIDE_RIGHT)
+	if (!lin || direction != SLIDE_LEFT && direction != SLIDE_RIGHT)
 		return (0);
 	if (direction == SLIDE_RIGHT)
+	{
 		d = -1;
-	for (a = 0; a < s - 1; a += d)
+		z = s;
+	}
+	for (a = z; a < s - 1; a += d)
 	{
 		if (!line[a])
 		{
