@@ -14,7 +14,7 @@ int slide_line(int *line, size_t size, int direction)
 		return (0);
 	if (direction == SLIDE_RIGHT)
 	{	d = -1;
-		z = s;
+		z = s - 1;
 		y = 0;
 	}
 	for (a = z; a != y; a += d)
@@ -32,7 +32,7 @@ int slide_line(int *line, size_t size, int direction)
 		if (!line[a + d])
 		{
 			c = a + d;
-			for (b = a + (2 * d); b != y + d; b += d)
+			for (b = a + d + d; b != y + d; b += d)
 				if (line[b])
 				{
 					line[c] = line[b];
