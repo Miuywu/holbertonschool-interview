@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <math.h>
 #include "menger.h"
 /**
  * put_space - Check for if fill
@@ -7,8 +9,8 @@
 */
 int help(int r, int c)
 {
-	for (; row && col; row /= 3, col /= 3)
-		if (row % 3 == 1 && col % 3 == 1)
+	for (; r && c; r /= 3, c /= 3)
+		if (r % 3 == 1 && c % 3 == 1)
 			return (1);
 	return (0);
 }
