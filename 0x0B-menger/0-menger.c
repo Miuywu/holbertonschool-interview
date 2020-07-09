@@ -2,7 +2,7 @@
 #include <math.h>
 #include "menger.h"
 /**
- * put_space - Check for if fill
+ * help - Check for if fill
  * @r: row index
  * @c: column index
  * Return: 1 to fill, 0 no
