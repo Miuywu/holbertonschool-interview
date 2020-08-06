@@ -1,39 +1,25 @@
 #include "binary_trees.h"
 /**
- * recurrer - array to an AVL tree recursively
- * @arr: sorted int array.
- * @start: The first index.
- * @end: The last index.
- * @avl: A pointer to the parent node of tree.
- * Return: The newly created AVL node.
- */
-avl_t *recursiveConvert(int *arr, int start, int end, avl_t *avl)
-{
-	avl_t *node;
-	int mid;
-
-	if (begin > end)
-		return (NULL);
-	mid = (begin + end) / 2;
-	node = malloc(sizeof(avl_t));
-	if (!new)
-		return (NULL);
-	node->n = array[mid];
-	node->parent = parent;
-	node->left = _sorted_array_to_avl(array, begin, mid - 1, new);
-	node->right = _sorted_array_to_avl(array, mid + 1, end, new);
-	return (new);
-}
-/**
- * sorted_array_to_avl - checks inputs and calls recurrer.
- * @array: sorted int array.
- * @size: length of the array.
- * Return: avl tree or (NULL) if failed.
+ * sorted_array_to_avl - array to AVL tree
+ * @array: sorted array
+ * @size: length of the array
+ * Return: AVL tree or NULL on error
  */
 avl_t *sorted_array_to_avl(int *array, size_t size)
 {
+	size_t mid;
+	avl_t *parent;
 
-	if (!array)
+	if (!array || size < 1)
 		return (NULL);
-	return (recursiveConvert(array, 0, size - 1, NULL));
+	parent = calloc(1, sizeof(avl_t));
+	if (!parent)
+		return (NULL);
+	mid = size / 2;
+	parent->n = array[mid];
+	parent->left = sorted_array_to_avl(array, mid);
+	parent->right = sorted_array_to_avl(array + mid + 1, size - mid - 1);
+	parent->left ? parent->left->parent = parent : 0;
+	parent->right ? parent->right->parent = parent : 0;
+	return (parent);
 }
