@@ -4,50 +4,92 @@
 
 if __name__ == '__main__':
     import sys
+    import copy
 
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
         sys.exit(1)
     try:
-        n = int(sys.argv[1])
-    except ValueError:
+        size = int(sys.argv[1])
+    except BaseException:
         print("N must be a number")
         sys.exit(1)
-    if n < 4:
+    if size < 4:
         print("N must be at least 4")
         sys.exit(1)
 
-    def __init__(self, nqs: int):
-        self.nqs = nqs
-        self.solutions = None
-        self.tracker = [-1] * nqs
+    def get_board(size):
+        """Creates an n by n board"""
+        board = [0] * size
+        for ix in range(size):
+            board[ix] = [0] * size
+        return board
 
-    def valid(self, col: int):
-        """Check if a queen can be placed in a column"""
-        for i in range(col):
-            if abs(self.tracker[i] - self.tracker[col]) in {0, col - i}:
+    def print_solutions(solutions, size):
+        """Prints all N-queens solutions."""
+        new = []
+        for sol in solutions:
+            tmp = []
+            for i, row in enumerate(sol):
+                inner = []
+                for j, num in enumerate(row):
+                    if num == 1:
+                        inner.append(j)
+                        inner.append(i)
+                tmp.append(inner)
+            new.append(tmp)
+        for ans in new:
+            print(ans)
+
+    def is_safe(board, row, col, size):
+        """Checks if a queen can be placed at the given position."""
+
+        # check row on left side
+        for iy in range(col):
+            if board[row][iy] == 1:
                 return False
+
+        ix, iy = row, col
+        while ix >= 0 and iy >= 0:
+            if board[ix][iy] == 1:
+                return False
+            ix -= 1
+            iy -= 1
+
+        jx, jy = row, col
+        while jx < size and jy >= 0:
+            if board[jx][jy] == 1:
+                return False
+            jx += 1
+            jy -= 1
+
         return True
 
-    def helper(self, index: int, cols):
-        """Solve N-Queens problem"""
-        if index == self.nqs:
-            self.solutions.append(cols)
+    def solve(board, col, size):
+        """Gets all N-queens solutions."""
+        # base case
+        if col >= size:
             return
-        for i in range(self.nqs):
-            self.tracker[index] = i
-            if self.valid(index):
-                self.helper(index + 1, cols + [i])
 
-    def solve(self):
-        """Run recursive helper function"""
-        if self.solutions is None:
-            self.solutions = []
-            self.helper(0, [])
-        return [list(enumerate(sol)) for sol in self.solutions]
+        for i in range(size):
+            if is_safe(board, i, col, size):
+                board[i][col] = 1
+                if col == size - 1:
+                    add_solution(board)
+                    board[i][col] = 0
+                    return
+                solve(board, col + 1, size)
+                # backtrack
+                board[i][col] = 0
 
-    solver = NQueens(n)
-    solutions = solver.solve()
-    for res in solutions:
-        out = [list(el) for el in res]
-        print(out)
+    def add_solution(board):
+        """Saves the board.'"""
+        global solutions
+        saved_board = copy.deepcopy(board)
+        solutions.append(saved_board)
+
+    board = get_board(size)
+    solutions = []
+    solve(board, 0, size)
+
+    print_solutions(solutions, size)
