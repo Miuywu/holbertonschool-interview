@@ -18,5 +18,6 @@ struct binary_tree_s
 };
 
 typedef struct binary_tree_s binary_tree_t;
+avl_t *sorted_array_to_avl(int *array, size_t size);
 
 #endif /* BINARY_TREES_H */
