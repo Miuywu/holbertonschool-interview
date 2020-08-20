@@ -13,10 +13,10 @@ request.get(`http://swapi.co/api/films/${process.argv[2]}`, async (error, respon
   }
 });
 
-function nameRequest (char_url) {
+function nameRequest (charUrl) {
   const name = new Promise(
     (resolve, reject) => {
-      request(char_url, (error, response, body) => {
+      request(charUrl, (error, response, body) => {
         if (error) {
           console.error('error:', error)
         }
