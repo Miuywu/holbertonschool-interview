@@ -1,31 +1,33 @@
 #include "sort.h"
+
 /**
- * heap_sort - Heap sorts
- * @array: The array 
- * @size: The length
+ * heap_sort - Heap sorts an array of integers.
+ * @array: The array to sort.
+ * @size: The length of the array.
  */
 void heap_sort(int *array, size_t size)
 {
 	int i;
 
 	for (i = size / 2 - 1; i >= 0; i--)
-		converter(array, size, i, size);
+		heapify(array, size, i, size);
 	for (i = size - 1; i >= 0; i--)
 	{
-		switch(&array[0], &array[i]);
+		swap(&array[0], &array[i]);
 		if (i != 0)
 			print_array(array, size);
-		converter(array, i, 0, size);
+		heapify(array, i, 0, size);
 	}
 }
+
 /**
- * converter - heap from an array.
- * @arr: The array
- * @n: The size 
- * @i: The index 
- * @size: The length 
+ * heapify - Creates a heap from an array.
+ * @arr: The array to create the heap from.
+ * @n: The size of the heap.
+ * @i: The index of the root.
+ * @size: The length of the array.
  */
-void converter(int *arr, int n, int i, size_t size)
+void heapify(int *arr, int n, int i, size_t size)
 {
 	int max = i;
 	int left = 2 * i + 1;
@@ -39,17 +41,18 @@ void converter(int *arr, int n, int i, size_t size)
 
 	if (max != i)
 	{
-		switch(&arr[i], &arr[max]);
+		swap(&arr[i], &arr[max]);
 		print_array(arr, size);
-		converter(arr, n, max, size);
+		heapify(arr, n, max, size);
 	}
 }
+
 /**
- * switch - switchs two integers.
- * @a: The integer to switch with b.
- * @b: The integer to switch with a.
+ * swap - Swaps two integers.
+ * @a: The integer to swap with b.
+ * @b: The integer to swap with a.
  */
-void switch(int *a, int *b)
+void swap(int *a, int *b)
 {
 	int tmp = *a;
 	*a = *b;
