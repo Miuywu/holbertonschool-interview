@@ -1,37 +1,35 @@
 #include "search_algos.h"
 
 /**
- * printer - Prints array.
- * @array: array
- * @start: beginning index.
- * @end: last index.
+ * print_array - convenience function for printing an array
+ * @array: array to print
+ * @size: size of the array
  */
-void printer(int *array, size_t start, size_t end)
+void print_array(int *array, size_t size)
 {
-	unsigned int i;
-
 	printf("Searching in array: ");
-	for (i = start; i < end; i++)
-		printf("%i, ", array[i]);
-	printf("%i\n", array[i]);
+	do {
+		printf("%d", *array++);
+	} while (--size && printf(", "));
+	putchar('\n');
 }
 
 /**
  * helper - find least index of num in array
- * @array: array
- * @value: target value
- * @left: boundary index 
- * @right: boundary index
- * Return: index of target value
+ * @array: array to search
+ * @value: value to search for
+ * @left: track index of value
+ * @right: track index of value
+ * Return: index of value
  */
-int helper(int *array, int value, int left, int right)
+int helper(int *array, int value, size_t left, size_t right)
 {
-	int mid;
+	size_t mid = left + (right - left) / 2;
 
 	if (left > right)
 		return (-1);
-    mid = left + (right - left) / 2;
-	printer(array + left, right - left + 1);
+
+	print_array(array + left, right - left + 1);
 
 	if (array[mid] == value && array[mid - 1] != value)
 		return (mid);
@@ -44,12 +42,14 @@ int helper(int *array, int value, int left, int right)
 
 /**
  * advanced_binary - find least index of num in array
- * @array: array
- * @size: size of array
- * @value: target value
+ * @array: array to search
+ * @size: size of the array
+ * @value: value to search for
  * Return: index of value
  */
 int advanced_binary(int *array, size_t size, int value)
 {
+	if (!array)
+		return (-1);
 	return (helper(array, value, 0, size - 1));
 }
