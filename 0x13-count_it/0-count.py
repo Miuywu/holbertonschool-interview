@@ -1,38 +1,37 @@
 #!/usr/bin/python3
-"""Get ALL hot posts"""
+'''Get ALL hot posts'''
 import pprint
 import re
 import requests
 
-url = 'http://reddit.com/r/{}/hot.json'
+BASE_URL = 'http://reddit.com/r/{}/hot.json'
 
 
 def count_words(subreddit, word_list, hot_list=[], after=None):
-    """Get ALL hot posts"""
+    '''Get ALL hot posts'''
     headers = {'User-agent': 'Unix:0-subs:v1'}
     params = {'limit': 100}
     if isinstance(after, str):
         if after != "STOP":
             params['after'] = after
         else:
-            return printer(word_list, hot_list)
+            return print_results(word_list, hot_list)
 
-    r = requests.get(url.format(subreddit),
+    response = requests.get(BASE_URL.format(subreddit),
                             headers=headers, params=params)
-    if r.status_code == 200:
-        data = r.json().get('data', {})
-        after = data.get('after', 'STOP')
-        if not after:
-        after = "STOP"
-        hot_list = hot_list + [post.get('data', {}).get('title')
-                           for post in data.get('children', [])]
-        return count_words(subreddit, word_list, hot_list, after)
-    else:
+    if response.status_code != 200:
         return None
+    data = response.json().get('data', {})
+    after = data.get('after', 'STOP')
+    if not after:
+        after = "STOP"
+    hot_list = hot_list + [post.get('data', {}).get('title')
+                           for post in data.get('children', [])]
+    return count_words(subreddit, word_list, hot_list, after)
 
 
-def printer(word_list, hot_list):
-    """request results"""
+def print_results(word_list, hot_list):
+    '''Prints request results'''
     count = {}
     for word in word_list:
         count[word] = 0
