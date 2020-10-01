@@ -2,72 +2,72 @@
 #include <stdio.h>
 #include <stdlib.h>
 /**
- * add - addition
- * @part: parter product
- * @mem: big malloc
+ * add - addition of parter products
+ * @p: parter product
+ * @mg: big malloc
  * @i: size of big malloc - 1
  * @tp: size of parter product - 1
   */
-void add(char *part, char *mem, int i, int tp)
+void add(char *p, char *mg, int i, int tp)
 {
 	int pos = tp, a = 0, b = 0, car = 0, res = 0;
-	int cont = tp, flag = 0;
+	int cont = tp, aux = 0;
 
 	for (; cont >=  0; cont--, i--, pos--)
 	{
-		a = *(part + pos) - '0';
-		b = *(mem + i) - '0';
+		a = *(p + pos) - '0';
+		b = *(mg + i) - '0';
 		res = (a + b) + car;
 		car = res / 10;
 		res = (res % 10) + '0';
-		*(mem + i) = res;
+		*(mg + i) = res;
 	}
 	res = 0;
-	for (flag = i - 1; flag >= 0; flag--)
+	for (aux = i - 1; aux >= 0; aux--)
 	{
-		a = *(mem + flag) - '0';
+		a = *(mg + aux) - '0';
 		a += a + car;
 		car = a / 10;
 		a = (a % 10) + '0';
-		*(mem + flag) = a;
+		*(mg + aux) = a;
 	}
 }
 /**
- * callo - calloc
- * @mem: pointer
- * @size: size of pointer
+ * calllo - fill the pointer with 0
+ * @s: pointer
+ * @a: size of pointer
  */
-void callo(char *mem, int size)
+void calllo(char *s, int a)
 {
-	int a;
+	int i;
 
-	for (a = 0; a < size; a++)
-		mem[i] = '0';
+	for (i = 0; i < a; i++)
+		s[i] = '0';
 }
 /**
- * parter - malloc
- * @size: size one
+ * parter - give the parter malloc
+ * @a: size one
  * Return: parter malloc
  */
-char *parter(int size)
+char *parter(int a)
 {
-	int a;
+	int i;
 	char *p;
 
-	p = malloc(size);
+	p = malloc(a);
 	if (!p)
 		return (NULL);
-	for (a = 0; a < size; a++)
-		p[a] = '0';
+	for (i = 0; i < a; i++)
+		p[i] = '0';
 	return (p);
 }
 /**
- * COMB - give big malloc
+ * combiner - give big malloc
  * @a: size one
  * @b: size two
  * Return: malloc
  */
-char *COMB(int a, int b)
+char *combiner(int a, int b)
 {
 	int i;
 	char *p;
@@ -80,8 +80,8 @@ char *COMB(int a, int b)
 	return (p);
 }
 /**
- * sizer - size
- * @s: string
+ * sizer - give the size
+ * @s: string of numbers
  * Return: size
  */
 int sizer(char *s)
@@ -89,7 +89,9 @@ int sizer(char *s)
 	int i = 0;
 
 	while (s[i] != '\0')
+	{
 		i++;
+	}
 	return (i);
 }
 /**
@@ -107,20 +109,20 @@ void Perror(void)
 	exit(98);
 }
 /**
- * num_check - check if strings have only numbers.
+ * numcheck - check if strings have only numbers.
  * @s: string 1
  * @a: string 2
  * Return: Always 1 if not or 0 if only has number.
  */
-void num_check(char *s, char *a)
+void numcheck(char *s, char *a)
 {
-	int i = 0, flag = 0;
+	int i = 0, aux = 0;
 
 	while (s[i] != '\0')
 	{
 		if (!(s[i] >= '0' && s[i] <= '9'))
 		{
-			flag = 1;
+			aux = 1;
 			break;
 		}
 		i++;
@@ -130,12 +132,12 @@ void num_check(char *s, char *a)
 	{
 		if (!(a[i] >= '0' && a[i] <= '9'))
 		{
-			flag = 1;
+			aux = 1;
 			break;
 		}
 		i++;
 	}
-	if (flag == 1)
+	if (aux == 1)
 		Perror();
 	if (*s == '0' || *a == '0')
 	{
@@ -168,17 +170,17 @@ void printer(char *s, int a)
  */
 int main(int argc, char *argv[])
 {
-	int t1, t2, t3, a = 0, b = 0, j = 0, flag = 0, car, g, ind;
-	char *mem, *p, *size1, *size2;
+	int t1, t2, t3, a = 0, b = 0, j = 0, aux = 0, car, g, ind;
+	char *mg, *p, *size1, *size2;
 
 	if (argc != 3)
 		Perror();
 	else
-	{ num_check(argv[1], argv[2]);
+	{ numcheck(argv[1], argv[2]);
 		t1 = sizer(argv[1]);
 		t2 = sizer(argv[2]);
 		ind = t1 + t2;
-		mem = COMB(t1, t2);
+		mg = combiner(t1, t2);
 		if (t1 >= t2)
 		{ size1 = argv[1];
 			size2 = argv[2];
@@ -198,14 +200,14 @@ int main(int argc, char *argv[])
 		{ car = 0;
 			b = g;
 			j = g + 1;
-			callo(p, t3);
+			calllo(p, t3);
 			for (; b >= 0; b--, j--)
-			{ flag = ((size2[a] - '0') * (size1[b] - '0'));
-				flag = flag + car;
-				p[j] = ((flag % 10) + '0');
-				car = flag / 10;	}
+			{ aux = ((size2[a] - '0') * (size1[b] - '0'));
+				aux = aux + car;
+				p[j] = ((aux % 10) + '0');
+				car = aux / 10;	}
 			p[j] = (car + '0');
-			add(p, mem, (ind - 1), (t3 - 1)); }
-		printer(mem, (t1 + t2)); }
+			add(p, mg, (ind - 1), (t3 - 1)); }
+		printer(mg, (t1 + t2)); }
 	return (0);
 }
